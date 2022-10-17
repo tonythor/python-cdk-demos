@@ -1,0 +1,4 @@
+# used to docker build
+ipython 
+boto3
+pyspark==3.3.0

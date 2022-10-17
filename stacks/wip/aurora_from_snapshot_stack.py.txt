@@ -1,0 +1,66 @@
+from operator import sub
+import random
+
+from aws_cdk import (
+    Duration, Stack,
+    CfnOutput,
+    aws_iam as iam,
+    aws_rds as rds,
+    aws_ec2 as ec2, 
+    aws_secretsmanager as sm
+)
+from constructs import Construct
+
+class AuroraServerlessDevDbStack(Stack):
+
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
+        super().__init__(scope, construct_id, **kwargs)
+
+        mysg = ec2.SecurityGroup(self, id=f"{slug}SG", vpc = vpc, allow_all_outbound=True)
+        # mysg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(5432))
+    
+
+
+        ## Create an instance form a snapshot
+        # todo 1 : figure out how to associate a secret with a database restored from a dump 
+        #        : the cloud formation database comes up on the secret, and then the snapshot
+        #        : is somehow associated with that secret, but when you destory the stack, the
+        #        : secret goes with it, so the snapshot is missing the secret. 
+        # to continue this workstream:
+        #       1: Build a database with the CF template above
+        #       2: use the console to take a snapshot
+        #       3: comment out aurora above, and uncomment out aurora below
+        #       4: get the arn of the snapshot and use it in the template below
+        #       5: figure out how to use whatever secret you created to access the snapshot
+        # aurora = rds.ServerlessClusterFromSnapshot(self, 
+        #     id=f"{slug}-{user}",
+        #     # credentials=rds.SnapshotCredentials.from_generated_secret(username=user),
+        #     scaling=rds.ServerlessScalingOptions(
+        #                 auto_pause=Duration.minutes(10),            # default is to pause after 5 minutes of idle time
+        #                 min_capacity=rds.AuroraCapacityUnit.ACU_2,  # default is 2 Aurora capacity units (ACUs)
+        #                 max_capacity=rds.AuroraCapacityUnit.ACU_16), 
+        #     snapshot_identifier="arn:aws:rds:us-east-1:764573855117:cluster-snapshot:titanic",
+        #     engine=rds.DatabaseClusterEngine.AURORA_POSTGRESQL,
+        #     copy_tags_to_snapshot=False,  # whether to save the cluster tags when creating the snapshot. Default is 'true'
+        #     parameter_group=rds.ParameterGroup.from_parameter_group_name(self, "ParameterGroup", "default.aurora-postgresql10"),
+        #     enable_data_api=True,
+        #     vpc=ec2.Vpc.from_vpc_attributes( self, 
+        #         id = 'our_vpc',
+        #         vpc_id = vpc_id,
+        #         availability_zones=['us-east-1a', 'us-east-1b'],
+        #         private_subnet_ids=[subnet1.subnet_id, subnet2.subnet_id]),
+        #         security_groups=[mysg])
+        # # secret_arn = aurora.secret.secret_arn
+        # url = f"{str(aurora.cluster_endpoint.hostname)}:{str(aurora.cluster_endpoint.port)}"
+        # my_user_secret = rds.DatabaseSecret(self, f"{slug}{user}",
+        #     username=user,
+        #     secret_name=f"{slug}{user}",  # optional, defaults to a CloudFormation-generated name
+        #     master_secret=aurora.secret,
+        #     exclude_characters="{}[]()"
+        #     )
+        # my_user_secret_attached = my_user_secret.attach(aurora) # Adds DB connections information in the secret
+
+
+
+
+

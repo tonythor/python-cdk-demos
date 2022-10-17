@@ -7,7 +7,7 @@
 config = {
          'slug' : 'HelloAwsAuroraServerless',
          'user' : 'afraser',
-         'account': '764573855117',
+         'account': '76457*******',
          'region' : 'us-east-1',
          'network' : {
             'vpc-name': 'CfVpcConstruct',
@@ -22,7 +22,7 @@ config = {
          },
          'ecs' :{
             'family': 'HelloAwsAuroraServerlessDev',
-            'image' : '764573855117.dkr.ecr.us-east-1.amazonaws.com/fargate-hello-world:latest',
+            'image' : '76457*******.dkr.ecr.us-east-1.amazonaws.com/fargate-hello-world:latest',
             'command': ["python", "./app.py", "hello", "world"]
          },
          'lambda' : {

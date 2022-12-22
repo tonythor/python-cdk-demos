@@ -11,11 +11,10 @@ from aws_cdk import (
 from cdk_ecr_deployment import (
     ECRDeployment as ecr_deploy,
     DockerImageName as docker_image_name)
-from stacks.config import config as config
+from stacks.config_nogit import config as config
 
 
 from constructs import Construct
-from stacks.config import config as config
 from pathlib import Path
 
 from stacks.network_stack import NetworkStack

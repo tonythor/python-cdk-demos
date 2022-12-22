@@ -8,7 +8,7 @@ from aws_cdk import (
     aws_secretsmanager as sm
 )
 from constructs import Construct
-from stacks.config import config
+from stacks.config_nogit import config as config
 
 
 class NetworkStack(Stack):

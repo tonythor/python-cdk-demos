@@ -5,7 +5,7 @@ from aws_cdk import (
 )
 
 from constructs import Construct
-from stacks.config import config
+from stacks.config_nogit import config as config
 
 class DBStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, network_stack, **kwargs) -> None:

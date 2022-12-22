@@ -9,7 +9,7 @@ from aws_cdk import (
     aws_ecs as ecs,
     aws_autoscaling as autoscaling)
 from constructs import Construct
-from stacks.config import config as config
+from stacks.config_nogit import config as config
 from stacks.network_stack import NetworkStack
 
 

@@ -8,7 +8,7 @@ from aws_cdk import (
     aws_ec2 as ec2)
 
 from constructs import Construct
-from stacks.config import config as config
+from stacks.config_nogit import config as config
 from stacks.elastic_stack import ElasticContainerServiceStack
 from stacks.task_stack import TaskStack
 from stacks.network_stack import NetworkStack

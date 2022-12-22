@@ -7,18 +7,14 @@ from aws_cdk import (
 )
 
 from constructs import Construct
-from stacks.config import config as config
+from stacks.config_nogit import config as config
 
-class TestVPCStack(Stack):
+class DedicatedVPCStack(Stack):
     def __init__(self, scope: Construct, id: str):
         ## This project was designed to work with existing private subnets, edit the stacks/config.py file
-        ## and you're good to go. 
+        ## and you're good to go. If you use you'll be creating your own dedicated vpc with dedicated 
+        ## subnets and such.
         
-        ## If you need a VPC, you can either use aws wizards ./doc/create_vpc.png,
-        ## Or you can run this stack to create one for you. This is a NOT CONNECTED stack,
-        ## It's totally independent. As well it should be moved out of the stack library 
-        ## when the project is migrated over to NBC infrastructure.
-
         slug = config.get('slug')
         super().__init__(scope, id, stack_name=f'cf{slug}TestVpcStack',)
 

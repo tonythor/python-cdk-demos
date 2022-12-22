@@ -17,7 +17,7 @@ from aws_cdk import (
 # )
 
 from constructs import Construct
-from stacks.config import config as config
+from stacks.config_nogit import config as config
 from stacks.db_stack import DBStack
 from stacks.network_stack import NetworkStack
 

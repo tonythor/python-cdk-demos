@@ -2,17 +2,17 @@
 from telnetlib import DO
 import aws_cdk as cdk
 
-from stacks.config import config
 from stacks.elastic_stack import ElasticContainerServiceStack
 from stacks.network_stack import NetworkStack
+from stacks.sql_insert_stack import SQLInsertStack
+from stacks.dedicated_vpc_stack import DedicatedVPCStack
 from stacks.db_stack import DBStack
 from stacks.task_stack import TaskStack
 from stacks.state_machine_stack import StateMachineStack
-from stacks.sql_insert_stack import SQLInsertStack
-from stacks.test_vpc_stack import TestVPCStack
+
 from stacks.docker_image_stack import DockerImageStack
 
-from stacks.config import config as config
+from stacks.config_nogit import config as config
 
 # Note1: If any of these are deployed, they should be grouped separately and deployed as nested stacks.
 # Right now it's sort of ad hoc, you want to use the database, first deploy network, then db, then sqlInsert.
@@ -23,6 +23,8 @@ app = cdk.App()
 # them in the actual stacks so they are easier to identify.
  
 # REQUIRED: This sets up your network. It loads whatever you set in /stacks/config.py for subnets and VPC's.
+# network_stack:NetworkStack = NetworkStack(scope=app, construct_id="networkStack")
+dedicated_vpc_stack:DedicatedVPCStack =  DedicatedVPCStack(app, "dedicatedVpcStack")
 network_stack:NetworkStack = NetworkStack(scope=app, construct_id="networkStack")
 
 # A serverless aurora db, and a lambda function that inserts the titanic data set into that DB.
@@ -43,7 +45,7 @@ state_machine_stack:StateMachineStack = StateMachineStack(app, "smStack",
 
 # a stack that BUILDS a vpc. Not required, but one of three ways to kick off using these templates.
 # see the testVPC stack file. You will have to uncomment this out to use it.
-test_vpc_stack: TestVPCStack(app, "testVpcStack")
+
 
 
 app.synth()

@@ -1,8 +1,10 @@
-## todo: AUG-12376 -- move to nbcuas account
+## Obviously, my config file is called config_nogit.py, but here's what it should look like.
 
 ## to use prepare for the network stack:
 ##  --> set the slug, vpc vpc_id, private subnets, and private subnet ciders.
 ##  --> leave everything else alone unless you know what you're changing.
+
+
 
 config = {
          'slug' : 'HelloAwsAuroraServerless',

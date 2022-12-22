@@ -1,0 +1,6 @@
+*nogit*
+.venv/*
+.vscode/*
+cdk.out/*
+*__pycache__*
+cdk.context.json

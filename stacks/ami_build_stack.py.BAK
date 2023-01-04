@@ -1,0 +1,114 @@
+from aws_cdk import (
+    Duration, Stack, CfnOutput,
+    aws_ec2 as ec2,
+    aws_imagebuilder as imagebuilder
+
+)
+from constructs import Construct
+from stacks.config_nogit import config as config
+
+
+class AMIBuildStack(Stack):
+    def __init__(self, scope: Construct, construct_id: str, network_stack, **kwargs) -> None:
+        slug = config.get('slug')
+        super().__init__(scope, construct_id,  stack_name=f"{slug}AmiStack", **kwargs)
+
+        udo= """
+        #!/bin/bash
+        yum update -y
+
+        Install the CloudWatch Agent: 
+        sudo yum install amazon-cloudwatch-agent awscli -y
+
+        2. Configure the CloudWatch agent: 
+        sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard
+
+        **** Say no to monitoring CollectD ****
+
+        **** Monitor /var/log/messages ****
+        3. cd /opt/aws/amazon-cloudwatch-agent/bin
+        /opt/aws/amazon-cloudwatch-agent/bin/config.json is the config file
+
+        4. Start the CloudWatch Agent
+        sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
+
+        5. Generate some activity on our system by installing stress - it’s in the Extra Packages for Enterprise Linux (EPEL) repository, so first we'll install the epel repository, then we'll install stress:
+
+        sudo amazon-linux-extras install epel -y
+        sudo yum install stress -y
+        stress --cpu 1
+        """
+
+
+        cfn_image_recipe = imagebuilder.CfnImageRecipe(self, "MyCfnImageRecipe",
+                    components=[imagebuilder.CfnImageRecipe.ComponentConfigurationProperty(
+                        # component_arn="componentArn",
+                        custom_ami_id='arn:aws:imagebuilder:us-east-1:764573855117:image/ssmandcloudwatch/1.0.0', 
+                        parameters=[imagebuilder.CfnImageRecipe.ComponentParameterProperty(
+                            name="name",
+                            value=["value"]
+                        )]
+                    )],
+                
+                    name="myImage",
+                    parent_image='ami-033b95fb8079dc481',
+                    version="0.0.1",
+                
+                    # the properties below are optional
+                    additional_instance_configuration=imagebuilder.CfnImageRecipe.AdditionalInstanceConfigurationProperty(
+                        systems_manager_agent=imagebuilder.CfnImageRecipe.SystemsManagerAgentProperty(
+                            uninstall_after_build=False
+                        ),
+                        
+                        user_data_override=udo,
+                        
+                    ),
+                    block_device_mappings=[imagebuilder.CfnImageRecipe.InstanceBlockDeviceMappingProperty(
+                        device_name="/dev/xvda",
+                        ebs=imagebuilder.CfnImageRecipe.EbsInstanceBlockDeviceSpecificationProperty(
+                            delete_on_termination=True,
+                            # encrypted=False,
+                            # iops=123,
+                            # kms_key_id="kmsKeyId",
+                            # snapshot_id="snapshotId",
+                            # throughput=123,
+                            volume_size=10,
+                            volume_type="gp3"
+                        ),
+                        no_device="noDevice",
+                        virtual_name="virtualName"
+                    )],
+                    description="description",
+                    tags={
+                        "tags_key": "tags"
+                    },
+                    working_directory="workingDirectory"
+                )
+#          MyAMI:
+#   Type: Custom::AMI
+#   Properties:
+#     ServiceToken: !ImportValue AMILambdaFunctionArn
+#     Image:
+#       Name: my-image
+#       Description: some description for the image
+#     TemplateInstance:
+#       ImageId: ami-467ca739
+#       IamInstanceProfile:
+#         Arn: arn:aws:iam::1234567890:instance-profile/MyProfile-ASDNSDLKJ
+#       UserData:
+#         Fn::Base64: !Sub |
+#           #!/bin/bash -x
+#           yum -y install mysql # provisioning example
+#           # Signal that the instance is ready
+#           INSTANCE_ID=`wget -q -O - http://169.254.169.254/latest/meta-data/instance-id`
+#           aws ec2 create-tags --resources $INSTANCE_ID --tags Key=UserDataFinished,Value=true --region ${AWS::Region}
+#       KeyName: my-key
+#       InstanceType: t2.nano
+#       SecurityGroupIds:
+#       - sg-d7bf78b0
+#       SubnetId: subnet-ba03aa91
+#       BlockDeviceMappings:
+#       - DeviceName: "/dev/xvda"
+#         Ebs:
+#           VolumeSize: '10'
+#           VolumeType: gp2

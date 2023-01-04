@@ -9,6 +9,8 @@ from stacks.dedicated_vpc_stack import DedicatedVPCStack
 from stacks.db_stack import DBStack
 from stacks.task_stack import TaskStack
 from stacks.state_machine_stack import StateMachineStack
+from stacks.emr_stack import EMRStack
+# from stacks.ami_build_stack import AMIBuildStack
 
 from stacks.docker_image_stack import DockerImageStack
 
@@ -28,8 +30,8 @@ dedicated_vpc_stack:DedicatedVPCStack =  DedicatedVPCStack(app, "dedicatedVpcSta
 network_stack:NetworkStack = NetworkStack(scope=app, construct_id="networkStack")
 
 # A serverless aurora db, and a lambda function that inserts the titanic data set into that DB.
-db_stack:DBStack = DBStack(app, "dbStack", network_stack = network_stack)
-sql_insert_stack:SQLInsertStack = SQLInsertStack(app, "sqlInsertStack", network_stack = network_stack, db_stack=db_stack)
+# db_stack:DBStack = DBStack(app, "dbStack", network_stack = network_stack)
+# sql_insert_stack:SQLInsertStack = SQLInsertStack(app, "sqlInsertStack", network_stack = network_stack, db_stack=db_stack)
 
 # An ec2/ecs cluster, and a prebuilt hello world docker container as a runnable state machine so you can keep firing 
 # off that docker container into ecs as often as you want.
@@ -43,9 +45,9 @@ state_machine_stack:StateMachineStack = StateMachineStack(app, "smStack",
     task_stack=task_stack,
     network_stack=network_stack)
 
-# a stack that BUILDS a vpc. Not required, but one of three ways to kick off using these templates.
-# see the testVPC stack file. You will have to uncomment this out to use it.
 
-
+# a sample emr Stack
+# ami_stack:AMIBuildStack = AMIBuildStack(app, "amiBuildStack", network_stack=network_stack)
+emr_stack:EMRStack = EMRStack(app, "emrStack", network_stack=network_stack)
 
 app.synth()

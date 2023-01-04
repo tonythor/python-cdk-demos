@@ -26,6 +26,7 @@ class NetworkStack(Stack):
          
         )
 
+
         # you're going to need private subnets not in an array, but cast as an [iSubnet]
         # ``` self.private_iSubnets = self.vpc.private_subnets ``
         # doesn't seem to work like it should. Tthere's something about this version of CDK 

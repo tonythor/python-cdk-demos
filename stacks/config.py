@@ -13,8 +13,8 @@ config = {
          'region' : 'us-east-1',
          'network' : {
             'vpc-name': 'CfVpcConstruct',
-            'vpc_id' : 'vpc-02ca5864f19a7abc1', 
-            'private_subnet_ids' : ['subnet-06864cdac4306db62','subnet-0b79c7c05d8e0f30f'],
+            'vpc_id' : 'vpc-****', 
+            'private_subnet_ids' : ['subnet-******','subnet-******'],
             'sn1_cider': '10.0.2.0/24',
             'sn2_cider' : '10.0.3.0/24',
             'availability_zones' : ['us-east-1a']

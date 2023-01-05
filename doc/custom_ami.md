@@ -26,7 +26,8 @@ sudo /bin/updatedb
 sudo systemctl enable amazon-ssm-agent
 sudo systemctl enable amazon-cloudwatch-agent
 sudo systemctl start amazon-ssm-agent
-sudo systemctl start amazon-cloudwatch-agent ```
+sudo systemctl start amazon-cloudwatch-agent 
+```
 
     1. Set a version, save the recipe.
     1. Load the recipe in the console, look for "create a pipeline for this recipe" and go through that.

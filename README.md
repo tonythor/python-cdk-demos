@@ -9,7 +9,7 @@ This is my working project where I practice with Python CDK. There are all sorts
 * Creating an EMR cluster (but one that specifically launches with SSM and the cloud watch agent) 
 etc.
 
-If you want to try any of these, you might need to comment some in our out of [./app.py](./app.py)
+If you want to try any of these, you might need to comment stuff in/out of [./app.py](./app.py)
 
 ## Set up this project:
 ```

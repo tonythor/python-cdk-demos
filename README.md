@@ -3,8 +3,9 @@
 This is my working project where I practice with Python CDK. There are all sorts of examples in here, including:
 * Building a custom VPC from scratch
 * Creating a network construct 
-* Creating an Aurora DB, and prepopulating that with the Titanic data set.
-* Creating an EC2/ECS cluster and using state machine to send jobs to it.
+* Creating an Aurora DB, and pre populating that with the Titanic data set.
+* Building a docker image (experimental, not recommended for production)
+* Creating an EC2/ECS cluster and using state machine to send docker jobs to it.
 * Creating an EMR cluster (but one that specifically launches with SSM and the cloud watch agent) 
 etc.
 

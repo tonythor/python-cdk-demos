@@ -42,26 +42,27 @@ sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-c
 ```
 
 ## build your pipeline, test your instance
-    1. Load the recipe in the pipelines console, look for "create a pipeline for this recipe". This section talks about that wizard.
-        * when done, the output goes to your personal AMI's, like in launch instance -> My AMI's
-        * also, sends logs and keystrokes to cloudwatch
-        * also allows you to connect directly to box with `aws ssm start-session --target {running instance id}`
-    2. Setup SSM keystroke logging for all ECS instances:
-        Console -> AWS Systems Manager -> Cloudwatch Logging -> Enable and send to  /logging/sessionmanager-keystrokes
-    3. Create an IAM role with:
-        * S3 Full Access (or at least to the config file bucket)
-        * CloudWatchAgentServerPolicy
-        * AmazonSSMManagedInstanceCore
-    4. Go to EC2->Launch instance
-        1. Pick you "my AMI"
-        1. No key pair, you're going to use SSM to connect
-        1. Set your private vpc and private subnet
-        1. Security group doesn't need any permissions, should have no permissions
-        3. Go into "advacned advanced and apply the IAM role to it.    
-    4. Connect to your instance and test
-        * use ssm and start a sesson, make sure you can access.
-        * verify keystroke logging
-        * verify whatever log files from the host you are sending to cloudwatch
+
+1. Load the recipe in the pipelines console, look for "create a pipeline for this recipe". This section talks about that wizard.
+    * when done, the output goes to your personal AMI's, like in launch instance -> My AMI's
+    * also, sends logs and keystrokes to cloudwatch
+    * also allows you to connect directly to box with `aws ssm start-session --target {running instance id}`
+1. Setup SSM keystroke logging for all ECS instances:
+    * Console -> AWS Systems Manager -> Cloudwatch Logging -> Enable and send to  /logging/sessionmanager-keystrokes
+1. Create an IAM role with:
+    * S3 Full Access (or at least to the config file bucket)
+    * CloudWatchAgentServerPolicy
+     * AmazonSSMManagedInstanceCore
+1. Go to EC2->Launch instance
+    1. Pick you "my AMI"
+    1. No key pair, you're going to use SSM to connect
+    1. Set your private vpc and private subnet
+    1. Security group doesn't need any permissions, should have no permissions
+    1. Go into "advacned advanced and apply the IAM role to it.    
+1. Connect to your instance and test
+    * use ssm and start a session, make sure you can access.
+    * verify keystroke logging
+    * verify whatever log files from the host you are sending to cloudwatch
       
 * Note: if your logging doesn't start correctly, SSM into the box, run the "aws s3 cp logconfig.json" and amazon-cloudwatch-agent-ctl reinitialize bit. It whatever role built the image probaby didn't have permission to access your S3 bucket. 
 

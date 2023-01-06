@@ -1,5 +1,6 @@
-## Creating and running a custom AMI   
-In an effort to correctly capture logging and SSM on ec2 instance, either as part of an emr or load balanced ecs cluster, I'm putting this little hidden gem into this project.
+## Ami's with SSM and the Cloudwatch agent   
+This is a little extra bit of this project, the end result of some research.
+
 
 ### Setup
 1. Set up your network: I've been using this dedicatedVPCStack and networkStack in this project.

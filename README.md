@@ -29,3 +29,5 @@ aws ec2 describe-instances > ./running_instances.json
 aws ssm start-session --target {instance-id from json}
 ```
 
+## Other docs:
+[launch ami with cloudwatch and ssm](./doc/amis_with_ssm_and_cloudwatch.md)

@@ -1,4 +1,5 @@
 # python-cdk-demos
+## Overview
 This is my working project where I practice with Python CDK. There are all sorts of examples in here, including:
 * Building a custom VPC from scratch
 * Creating a network construct 
@@ -9,8 +10,7 @@ etc.
 
 If you want to try any of these, you might need to comment some in our out of [./app.py](./app.py)
 
-
-### Set up this project:
+## Set up this project:
 ```
 ## git clone
 python3 -m venv .venv     # build your project virtual env 
@@ -29,7 +29,8 @@ cdk deploy {whichever stack you want to play with}
 ```
 
 
-### Extra: set up session manager locally
+## Extra: 
+### Set up session manager locally
 ```
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "sessionmanager-bundle.zip" 
 unzip sessionmanager-bundle.zip
@@ -38,5 +39,6 @@ aws ec2 describe-instances > ./running_instances.json
 aws ssm start-session --target {instance-id from json}
 ```
 
-### Other stuff:
-[launch ami with cloudwatch and ssm](./doc/amis_with_ssm_and_cloudwatch.md)
+### Custom AMI's
+* TODO: a stack that builds an ami
+* [launch ami with cloudwatch and ssm](./doc/amis_with_ssm_and_cloudwatch.md)

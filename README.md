@@ -31,6 +31,8 @@ cdk deploy {whichever stack you want to play with}
 
 ## Extra: 
 ### Set up session manager locally
+Never use SSH keys again on aws instances! 
+
 ```
 curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "sessionmanager-bundle.zip" 
 unzip sessionmanager-bundle.zip

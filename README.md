@@ -16,6 +16,7 @@ cdk synth
 cdk deploy dedicatedVPCStack
 ## go get subnet id's and vpc id from console, put them in config.py
 cdk deploy networkStack
+cdk deploy {whichever stack you want to play with}
 ```
 
 

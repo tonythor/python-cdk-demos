@@ -4,4 +4,5 @@ ipython
 botocore
 boto3
 pandas
+requests
 cdk-ecr-deployment

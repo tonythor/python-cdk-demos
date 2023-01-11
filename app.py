@@ -10,6 +10,8 @@ from stacks.dedicated_vpc_stack import DedicatedVPCStack
 #from stacks.task_stack import TaskStack
 #from stacks.state_machine_stack import StateMachineStack
 from stacks.emr_stack import EMRStack
+from stacks.emr_monitor_stack import EmrMonitor
+
 # from stacks.ami_build_stack import AMIBuildStack
 # from stacks.docker_image_stack import DockerImageStack
 
@@ -49,6 +51,6 @@ network_stack:NetworkStack = NetworkStack(scope=app, construct_id="networkStack"
 # EMR: Build a cluster, prep for sending jobs. Hasn't had jobs submitted to it yet, it was used to set
 # up cloudwatch alarms for idle clusters.
 emr_stack:EMRStack = EMRStack(app, "emrStack", network_stack=network_stack)
-
+emr_mon:EmrMonitor = EmrMonitor(app, "emonStack", network_stack=network_stack)
 
 app.synth()
